@@ -1,7 +1,7 @@
 #
 # This script can be executed with a command like the following:
 #
-#    python stage-files.py \ 
+#    python stage-files.py \
 #        --baseDownloadUrl http://yourserver.com/yourfolder/ \
 #        --localTempFolder /tmp/ \
 #        --bucket your-bucket \
@@ -14,17 +14,18 @@ import urllib.request
 import shutil
 import logging
 
+# This is only needed for my local environment
 session = boto3.Session(profile_name='usgs')
 s3_client = session.client('s3')
 
-help_string = 'stage-files.py --baseDownloadUrl <value> --localTempFolder <value> --bucket <value> --fileList <comma delimited list of file names to download>'
-
 def main(argv):
-	"""main entry point into the script
+	"""
+	main entry point into the script
 
 	:param argv command line parameters in the format --baseDownloadUrl <value> --localTempFolder <value> --bucket <value> --fileList <comma delimited list of file names to download>
 	"""
 	# parse command line parameters
+	help_string = 'stage-files.py --baseDownloadUrl <value> --localTempFolder <value> --bucket <value> --fileList <comma delimited list of file names to download>'
 	try:
 		opts, args = getopt.getopt(argv,"",["help","baseDownloadUrl=","localTempFolder=","bucket=","fileList="])
 	except getopt.GetoptError:
@@ -49,7 +50,8 @@ def main(argv):
 		process_file(file, base_url, bucket_name, temp_folder)
 
 def download_file(url, tmp_file):
-	"""Download a file from a url
+	"""
+	Download a file from a url
 
 	:param url: url of the file to download
 	:param tmp_file: the temporary file to create
@@ -66,26 +68,28 @@ def download_file(url, tmp_file):
 	return True
 
 def upload_file(file_name, bucket, object_name=None):
-    """Upload a file to an S3 bucket
+	"""
+	Upload a file to an S3 bucket
 
-    :param file_name: File to upload
-    :param bucket: Bucket to upload to
-    :param object_name: S3 object name. If not specified then file_name is used
-    :return: True if file was uploaded, else False
-    """
-    # If S3 object_name was not specified, use file_name
-    if object_name is None:
-        object_name = file_name
-    # Upload the file
-    try:
-        response = s3_client.upload_file(file_name, bucket, object_name)
-    except ClientError as e:
-        logging.error(e)
-        return False
-    return True
+	:param file_name: File to upload
+	:param bucket: Bucket to upload to
+	:param object_name: S3 object name. If not specified then file_name is used
+	:return: True if file was uploaded, else False
+	"""
+	# If S3 object_name was not specified, use file_name
+	if object_name is None:
+		object_name = file_name
+	# Upload the file
+	try:
+		response = s3_client.upload_file(file_name, bucket, object_name)
+	except ClientError as e:
+		logging.error(e)
+		return False
+	return True
 
 def process_file(file_name, base_url, bucket_name, temp_folder):
-	"""Process a file
+	"""
+	Process a file
 
 	:param file_name the file to process
 	:param base_url the base url to download the file from
@@ -98,6 +102,8 @@ def process_file(file_name, base_url, bucket_name, temp_folder):
 		print('  uploading file ' + file_name)
 		if (upload_file(temp_folder + file_name, bucket_name, file_name)):
 			print('  uploaded ' + file_name)
+			os.remove(temp_folder + file_name)
 
+# Execute the main function and pass along the supplied command line parameters
 if __name__ == "__main__":
-   main(sys.argv[1:])
+	main(sys.argv[1:])

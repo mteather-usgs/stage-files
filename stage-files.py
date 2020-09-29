@@ -3,7 +3,7 @@
 #
 #    python stage-files.py \ 
 #        --baseDownloadUrl http://yourserver.com/yourfolder/ \
-#        --localTempFolder /tmp/ \                                                           noms-site$
+#        --localTempFolder /tmp/ \
 #        --bucket your-bucket \
 #        --fileList file1.zip,file2.csv,file3.zip,file4.csv
 #

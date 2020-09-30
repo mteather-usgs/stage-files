@@ -16,8 +16,9 @@ import logging
 from botocore.exceptions import ClientError
 
 # This is only needed for my local environment
-session = boto3.Session(profile_name='usgs')
-s3_client = session.client('s3')
+#session = boto3.Session(profile_name='usgs')
+#s3_client = session.client('s3')
+s3_client = boto3.client('s3')
 
 def main(argv):
 	"""

@@ -18,8 +18,6 @@ pipeline {
         def temp = '/tmp/'
         def bucket = 'wma-noms-demo'
         def files = 'SiteVisitSite.zip,SiteVisitSite.tsv,SiteVisitData.tsv,SiteVisitData.zip'
-        sh ". .env/bin/activate & python3 stage-files.py --baseDownloadUrl ${url} --localTempFolder ${temp} --bucket ${bucket} 
---fileList ${files}"
-    }
-    
+        sh ". .env/bin/activate & python3 stage-files.py --baseDownloadUrl ${url} --localTempFolder ${temp} --bucket ${bucket} --fileList ${files}"
+    }    
 }

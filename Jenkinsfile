@@ -1,7 +1,4 @@
-pipeline {
-    agent any
-    
-    stages {
+node {
 	    stage('clone code from git') {
 		steps {
 		        git 'https://github.com/mteather-usgs/stage-files.git'

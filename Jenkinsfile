@@ -26,5 +26,5 @@ node {
 		        sh ". .env/bin/activate & python3 stage-files.py --baseDownloadUrl ${url} --localTempFolder ${temp} --bucket ${bucket} --fileList ${files}"
 		}
 	    }    
-    }
 }
+

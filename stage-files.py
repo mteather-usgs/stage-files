@@ -13,6 +13,7 @@ import boto3
 import urllib.request
 import shutil
 import logging
+from botocore.exceptions import ClientError
 
 # This is only needed for my local environment
 session = boto3.Session(profile_name='usgs')

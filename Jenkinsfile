@@ -1,4 +1,4 @@
-node {
+node("team:noms") {
     stage('clone code from git') {
         git 'https://github.com/mteather-usgs/stage-files.git'
     }
